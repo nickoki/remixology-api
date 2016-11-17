@@ -1,4 +1,4 @@
-// db/seeds/glasses.js
+// db/seeds/glassware.js
 
 // Require connection
 var mongoose = require('../connection')

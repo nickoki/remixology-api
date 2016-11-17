@@ -12,6 +12,7 @@ var Drink      = require('./db/models/Drink')
 
 // Controllers
 var drinks      = require('./controllers/drinks')
+var glassware   = require('./controllers/glassware')
 
 
 
@@ -53,8 +54,9 @@ router.route('/drinks')
   .get(drinks.get)
   .post(drinks.post)
 
-// Routing for Glasses
-
+// Routing for Glassware
+router.route('/glassware')
+  .get(glassware.get)
 
 
 
