@@ -43,7 +43,7 @@ router.get('/', (req, res) => {
   res.json({ message: `Cheers! Welcome to the Remixology API.` })
 })
 
-// /drinks
+// Routing for Drinks
 router.route('/drinks')
 
   // GET
@@ -63,6 +63,8 @@ router.route('/drinks')
       else res.json({ message: `Cheers! Drink posted successfully.` })
     })
   })
+
+// Routing for Glasses
 
 
 
