@@ -6,6 +6,7 @@
 var express    = require('express')
 var bodyParser = require('body-parser')
 var db         = require('./db/connection')
+var Drink      = require('./db/models/Drink')
 
 
 
@@ -37,9 +38,31 @@ app.use( (req, res, next) => {
 // ====================
 // API Routes
 // ====================
+// Root
 router.get('/', (req, res) => {
   res.json({ message: `Cheers! Welcome to the Remixology API.` })
 })
+
+// /drinks
+router.route('/drinks')
+
+  // GET
+  .get( (req, res) => {
+    Drink.find( (err, drinks) => {
+      if (err) res.send(err)
+      else res.json(drinks)
+    })
+  })
+
+  // POST
+  .post( (req, res) => {
+    var drink = new Drink()
+    drink.name = req.body.name
+    drink.save( err => {
+      if (err) res.send(err)
+      else res.json({ message: `Cheers! Drink posted successfully.` })
+    })
+  })
 
 
 
