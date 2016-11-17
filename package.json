@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/nickoki/remixology-api/issues"
   },
-  "homepage": "https://github.com/nickoki/remixology-api#readme"
+  "homepage": "https://github.com/nickoki/remixology-api#readme",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
 }
