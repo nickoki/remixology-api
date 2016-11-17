@@ -11,19 +11,36 @@ var express = require('express')
 // App Declaration
 // ====================
 var app = express()
-// var router = express.Router()
+var router = express.Router()
 
 // Define port
 var port = process.env.PORT || 7000
+
+// Handle CORS
+app.use( (req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Credentials', 'true')
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE')
+  res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers')
+  res.setHeader('Cache-Control', 'no-cache')
+  next()
+})
 
 
 
 // ====================
 // API Routes
 // ====================
-app.get('/', (req, res) => {
-  res.send( `Hello, World!` )
+router.get('/', (req, res) => {
+  res.json({ message: `Cheers! Welcome to the Remixology API.` })
 })
+
+
+
+// ====================
+// API Middleware
+// ====================
+app.use('/api', router)
 
 
 
