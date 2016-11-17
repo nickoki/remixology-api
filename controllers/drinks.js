@@ -13,7 +13,9 @@ var Glass = require('../db/models/Glass')
 // ====================
 // GET
 exports.get = (req, res) => {
-  Drink.find( (err, drinks) => {
+  Drink.find({})
+    .populate('glass', '-_id')
+    .exec((err, drinks) => {
     if (err) res.send(err)
     else res.json(drinks)
   })
