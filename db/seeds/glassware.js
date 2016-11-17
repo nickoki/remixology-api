@@ -17,11 +17,11 @@ var data = [
   },
 ]
 
-// Remove all entries, insert data
+// Remove all entries, insert seed data
 Glass.remove({}).then( () => {
   data.forEach( glass => {
-    Glass.collection.insert(glass).then(function(){
+    Glass.collection.insert(glass).then( () => {
       process.exit()
-    })
+    }).catch((err) => { console.log(err) })
   })
-})
+}).catch((err) => { console.log(err) })
