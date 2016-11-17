@@ -19,8 +19,14 @@ var DrinksSchema = new Schema({
     required: true,
   },
   glass: {
-    ref: 'Glass',
-    type: Schema.ObjectId,
+    ref:      'Glass',
+    type:     Schema.ObjectId,
+  },
+  description: {
+    type:     String,
+  },
+  instructions: {
+    type:     String,
   },
   created_at: {
     type:     Date,

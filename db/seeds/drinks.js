@@ -15,6 +15,8 @@ Glass.findOne({ name: 'Highball' }, (err, glass) => {
       {
         name: 'Vodka Martini',
         glass: glass._id,
+        description: '',
+        instructions: 'Shaken, not stirred.',
       },
     ]
 
