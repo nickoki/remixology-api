@@ -4,7 +4,7 @@
 // Module dependencies
 // ====================
 var mongoose = require('mongoose')
-
+var Glass = require('./Glass')
 
 
 // ====================
@@ -14,7 +14,19 @@ var Schema = mongoose.Schema
 
 // Define Schema for Drinks
 var DrinksSchema = new Schema({
-  name: String,
+  name: {
+    type:     String,
+    required: true,
+  },
+  glass: {
+    ref: 'Glass',
+    type: Schema.ObjectId,
+  },
+  created_at: {
+    type:     Date,
+    required: true,
+    default:  Date.now(),
+  }
 })
 
 

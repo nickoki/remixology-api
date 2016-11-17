@@ -4,6 +4,7 @@
 // Dependencies
 // ====================
 var Drink = require('../db/models/Drink')
+var Glass = require('../db/models/Glass')
 
 
 
@@ -22,8 +23,14 @@ exports.get = (req, res) => {
 exports.post = (req, res) => {
   var drink = new Drink()
   drink.name = req.body.name
-  drink.save( err => {
+  Glass.findOne({ name: req.body.glass }, (err, result) => {
+
     if (err) res.send(err)
-    else res.json({ message: `Cheers! Drink posted successfully.` })
+    else drink.glass = result
+
+    drink.save( e => {
+      if (e) res.send(e)
+      else res.json({ message: `Cheers! Drink posted successfully.` })
+    })
   })
 }

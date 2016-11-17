@@ -13,12 +13,28 @@ var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 
 // Define Schema for Glasses
-var GlassesSchema = new Schema({
-  name:          String,
-  image_url:     String,
-  capacity:      Number,
-  margin_top:    Number,
-  margin_bottom: Number,
+var GlaswareSchema = new Schema({
+  name: {
+    type:     String,
+    required: true,
+    unique:   true,
+  },
+  image_url: {
+    type:     String,
+    required: true,
+  },
+  capacity: {
+    type:     Number,
+    required: true,
+  },
+  margin_top: {
+    type:     Number,
+    required: true,
+  },
+  margin_bottom: {
+    type:     Number,
+    required: true,
+  },
 })
 
 
@@ -26,4 +42,4 @@ var GlassesSchema = new Schema({
 // ====================
 // Exports
 // ====================
-module.exports = mongoose.model('Glass', GlassesSchema)
+module.exports = mongoose.model('Glass', GlaswareSchema)
