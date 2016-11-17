@@ -4,7 +4,7 @@
 var mongoose = require('../connection')
 
 // Define Model
-var Glass = mongoose.model('Glass')
+var Glass    = require('../models/Glass')
 
 // Seed Data
 var data = [
@@ -17,10 +17,11 @@ var data = [
   },
 ]
 
+// Remove all entries, insert data
 Glass.remove({}).then( () => {
   data.forEach( glass => {
-    Glass.collection.insert(glass)
-  }).then( () => {
-    process.exit()
+    Glass.collection.insert(glass).then(function(){
+      process.exit()
+    })
   })
 })

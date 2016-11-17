@@ -5,6 +5,7 @@
 // ====================
 var mongoose = require('mongoose')
 var Drink    = require('./models/Drink')
+var Glass    = require('./models/Glass')
 
 // Fix mongoose promise warning
 mongoose.Promise = global.Promise
