@@ -3,7 +3,8 @@
 // ====================
 // Module dependencies
 // ====================
-var express = require('express')
+var express    = require('express')
+var bodyParser = require('body-parser')
 
 
 
@@ -15,6 +16,10 @@ var router = express.Router()
 
 // Define port
 var port = process.env.PORT || 7000
+
+// Set up body-parser
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 // Handle CORS
 app.use( (req, res, next) => {
