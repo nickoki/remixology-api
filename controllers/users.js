@@ -3,10 +3,8 @@
 // ====================
 // Dependencies
 // ====================
-var passport = require('passport')
-var jwt = require('jsonwebtoken')
-var db = require('../db/connection')
-require('../db/passport')(passport)
+var db   = require('../db/connection')
+var jwt  = require('jsonwebtoken')
 var User = require('../db/models/User')
 
 
@@ -48,9 +46,8 @@ exports.authenticate = (req, res) => {
           // Assign token
           var token = jwt.sign(user, db.secret)
           res.json({ success: true, token: `JWT ${token}` })
-        } else {
-          res.send({ success: false, message: 'Authentication failed: Incorrect password.' })
         }
+        else res.send({ success: false, message: 'Authentication failed: Incorrect password.' })
       })
     }
   })

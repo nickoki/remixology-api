@@ -35,6 +35,8 @@ var GlasswareSchema = new Schema({
     type:     Number,
     required: true,
   },
+}, {
+  timestamps: true
 })
 
 

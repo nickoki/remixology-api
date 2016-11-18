@@ -4,7 +4,8 @@
 // Module dependencies
 // ====================
 var mongoose = require('mongoose')
-var Glass = require('./Glass')
+var Glass    = require('./Glass')
+
 
 
 // ====================

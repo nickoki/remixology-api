@@ -4,7 +4,7 @@
 // Module dependencies
 // ====================
 var mongoose = require('mongoose')
-var bcrypt = require('bcrypt')
+var bcrypt   = require('bcrypt')
 
 
 
@@ -30,7 +30,9 @@ var UserSchema = new Schema({
   },
   photo_url: {
     type:    String,
-  }
+  },
+}, {
+  timestamps: true
 })
 
 // Before User save
@@ -49,19 +51,19 @@ UserSchema.pre('save', function(next) {
         next()
       })
     })
-  } else {
-    return next()
   }
+  else return next()
 })
 
 // Check password method
 UserSchema.methods.checkPassword = function(password, done) {
   // Compare passwords
-  bcrypt.compare(password, this.password, function(err, isMatch) {
+  bcrypt.compare(password, this.password, (err, isMatch) => {
     if (err) return done(err)
     else done(null, isMatch)
   })
 }
+
 
 
 // ====================

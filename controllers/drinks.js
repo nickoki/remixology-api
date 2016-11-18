@@ -23,18 +23,13 @@ exports.get = (req, res) => {
 
 // Create new Drink, POST
 exports.post = (req, res) => {
-  var drink = new Drink()
-  drink.name = req.body.name
-  drink.description = req.body.description
-  drink.instructions = req.body.instructions
-  Glass.findOne({ name: req.body.glass }, (err, result) => {
-
+  var drink = new Drink(req.body)
+  Glass.findOne({ name: req.body.glass }, (err, glass) => {
     if (err) res.send(err)
-    else drink.glass = result
-
-    drink.save( e => {
-      if (e) res.send(e)
-      else res.json({ message: `Cheers! Drink posted successfully.` })
+    else if (glass) drink.glass = glass
+    drink.save( err => {
+      if (err) res.send(err)
+      else res.json({ success: true, message: `Cheers! Drink posted successfully.` })
     })
   })
 }
@@ -42,24 +37,19 @@ exports.post = (req, res) => {
 // Edit Drink data, EDIT
 exports.edit = (req, res) => {
   Glass.findOne({ name: req.body.glass }, (err, glass) => {
-
     if (err) res.send(err)
-    else {
-      req.body.glass = glass
-      Drink.findOneAndUpdate({ _id: req.body._id }, { $set: req.body }, { new: true }, (err, result) => {
-        if (err) res.send(err)
-        else res.json({ message: `Drink updated succesfully.` })
-      })
-
-    }
+    else if (glass) req.body.glass = glass
+    Drink.findOneAndUpdate({ _id: req.body._id }, { $set: req.body }, { new: true }, (err, result) => {
+      if (err) res.send(err)
+      else res.json({ success: true, message: `Drink updated succesfully.` })
+    })
   })
-
 }
 
 // Delete Drink data, DELETE
 exports.delete = (req, res) => {
-  Drink.findOneAndRemove({ _id: req.body._id }, (err, result) => {
+  Drink.findOneAndRemove({ _id: req.body._id }, (err) => {
     if (err) res.send(err)
-    else res.json({ message: `Drink removed successfully.` })
+    else res.json({ success: true, message: `Drink removed successfully.` })
   })
 }
