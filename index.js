@@ -10,9 +10,10 @@ var bodyParser = require('body-parser')
 var db         = require('./db/connection')
 
 // Controllers
-var users       = require('./controllers/users')
+var auth        = require('./controllers/auth')
 var drinks      = require('./controllers/drinks')
 var glassware   = require('./controllers/glassware')
+var users       = require('./controllers/users')
 
 
 
@@ -58,7 +59,7 @@ router.route('/authenticate')
 
 // Routing for Drinks
 router.route('/drinks')
-  .get(drinks.get)
+  .get(auth.bouncer, drinks.get)
   .post(drinks.post)
   .put(drinks.edit)
   .delete(drinks.delete)

@@ -3,9 +3,9 @@
 // ====================
 // Dependencies
 // ====================
-var db   = require('../db/connection')
-var jwt  = require('jsonwebtoken')
-var User = require('../db/models/User')
+var db       = require('../db/connection')
+var jwt      = require('jsonwebtoken')
+var User     = require('../db/models/User')
 
 
 
