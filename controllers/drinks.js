@@ -40,7 +40,21 @@ exports.post = (req, res) => {
 }
 
 // EDIT
+exports.edit = (req, res) => {
+  Glass.findOne({ name: req.body.glass }, (err, glass) => {
 
+    if (err) res.send(err)
+    else {
+      req.body.glass = glass
+      Drink.findOneAndUpdate({ _id: req.body._id }, { $set: req.body }, { new: true }, (err, result) => {
+        if (err) res.send(err)
+        else res.json({ message: `Drink updated succesfully.` })
+      })
+
+    }
+  })
+
+}
 
 // DELETE
 exports.delete = (req, res) => {

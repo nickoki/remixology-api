@@ -53,6 +53,7 @@ router.get('/', (req, res) => {
 router.route('/drinks')
   .get(drinks.get)
   .post(drinks.post)
+  .put(drinks.edit)
   .delete(drinks.delete)
 
 // Routing for Glassware
