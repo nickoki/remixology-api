@@ -4,6 +4,8 @@
 // Dependencies
 // ====================
 var passport = require('passport')
+var jwt = require('jsonwebtoken')
+var db = require('../db/connection')
 require('../db/passport')(passport)
 var User = require('../db/models/User')
 
@@ -36,15 +38,15 @@ exports.signup = (req, res) => {
 exports.authenticate = (req, res) => {
   // Find User based on email
   // TODO Find based on username, too
-  User.findOne({ email: req.body.email }, (err, user) => {
+  User.findOne({ email: req.body.email }, function(err, user) {
     if (err) throw err
     if (!user) res.send({ success: false, message: 'Authentication failed: User not found.' })
     else {
       // Verify password
-      user.checkPassword(req.body.password, (err, isMatch) => {
+      user.checkPassword(req.body.password, function(err, isMatch) {
         if (isMatch && !err) {
           // Assign token
-          var token = jwt.encode(user, config.secret)
+          var token = jwt.sign(user, db.secret)
           res.json({ success: true, token: `JWT ${token}` })
         } else {
           res.send({ success: false, message: 'Authentication failed: Incorrect password.' })

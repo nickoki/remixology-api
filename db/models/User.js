@@ -34,7 +34,7 @@ var UserSchema = new Schema({
 })
 
 // Before User save
-UserSchema.pre('save', next => {
+UserSchema.pre('save', function(next) {
   var user = this
   // If edit password or new User
   if (this.isModified('password') || this.isNew) {
@@ -55,11 +55,11 @@ UserSchema.pre('save', next => {
 })
 
 // Check password method
-UserSchema.methods.checkPassword = (password, done) => {
+UserSchema.methods.checkPassword = function(password, done) {
   // Compare passwords
-  bcrypt.compare(password, this.password, (err, isMatch) => {
+  bcrypt.compare(password, this.password, function(err, isMatch) {
     if (err) return done(err)
-    else res(null, isMatch)
+    else done(null, isMatch)
   })
 }
 
