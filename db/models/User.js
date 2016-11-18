@@ -55,10 +55,10 @@ UserSchema.pre('save', next => {
 })
 
 // Check password method
-UserSchema.methods.checkPassword = (password, res) => {
+UserSchema.methods.checkPassword = (password, done) => {
   // Compare passwords
   bcrypt.compare(password, this.password, (err, isMatch) => {
-    if (err) return res(err)
+    if (err) return done(err)
     else res(null, isMatch)
   })
 }

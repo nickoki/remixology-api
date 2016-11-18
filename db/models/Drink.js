@@ -28,14 +28,17 @@ var DrinksSchema = new Schema({
   instructions: {
     type:     String,
   },
-  created_at: {
-    type:     Date,
-    required: true,
-    default:  Date.now(),
-  },
+  // created_at: {
+  //   type:     Date,
+  //   required: true,
+  //   default:  Date.now(),
+  // },
   // ingredients: {
   //   type: [Ingredient],
-  // }
+  // },
+
+}, {
+  timestamps: true
 })
 
 
