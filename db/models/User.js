@@ -33,9 +33,10 @@ var UserSchema = new Schema({
   }
 })
 
-// Before save, hash password
+// Before User save
 UserSchema.pre('save', next => {
   var user = this
+  // If edit password or new User
   if (this.isModified('password') || this.isNew) {
     // Salt password
     bcrypt.genSalt(10, (err, salt) {
@@ -53,6 +54,14 @@ UserSchema.pre('save', next => {
   }
 })
 
+// Check password method
+UserSchema.methods.checkPassword = (password, res) => {
+  // Compare passwords
+  bcrypt.compare(password, this.password, (err, isMatch) => {
+    if (err) return res(err)
+    else res(null, isMatch)
+  })
+}
 
 
 // ====================
