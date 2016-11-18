@@ -25,6 +25,8 @@ exports.get = (req, res) => {
 exports.post = (req, res) => {
   var drink = new Drink()
   drink.name = req.body.name
+  drink.description = req.body.description
+  drink.instructions = req.body.instructions
   Glass.findOne({ name: req.body.glass }, (err, result) => {
 
     if (err) res.send(err)

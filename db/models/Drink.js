@@ -32,7 +32,10 @@ var DrinksSchema = new Schema({
     type:     Date,
     required: true,
     default:  Date.now(),
-  }
+  },
+  // ingredients: {
+  //   type: [Ingredient],
+  // }
 })
 
 
