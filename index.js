@@ -59,10 +59,10 @@ router.route('/authenticate')
 
 // Routing for Drinks
 router.route('/drinks')
-  .get(auth.bouncer, drinks.get)
-  .post(drinks.post)
-  .put(drinks.edit)
-  .delete(drinks.delete)
+  .get(drinks.get)
+  .post(auth.bouncer, drinks.post)
+  .put(auth.bouncer, drinks.edit)
+  .delete(auth.bouncer, drinks.delete)
 
 // Routing for Glassware
 router.route('/glassware')
