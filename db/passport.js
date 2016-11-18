@@ -4,6 +4,7 @@
 // Module dependencies
 // ====================
 var JwtStrategy = require('passport-jwt').Strategy
+var ExtractJwt  = require('passport-jwt').ExtractJwt
 var User        = require('./models/User')
 var db          = require('./connection')
 
@@ -15,12 +16,13 @@ var db          = require('./connection')
 // JWT Strategy
 module.exports = passport => {
   var opts = {}
-  opts.secretOrKey = config.secret
-  passport.user(new JwtStrategy(opts, jwt_payload, done) => {
+  opts.jwtFromRequest = ExtractJwt.fromAuthHeader()
+  opts.secretOrKey = db.secret
+  passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
     User.findOne({ _id: jwt_payload.id }, (err, user) => {
       if (err) return done(err, false)
       if (user) done(null, user)
       else done(null, false)
     })
-  })
+  }))
 }

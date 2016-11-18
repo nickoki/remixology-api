@@ -11,7 +11,7 @@ var Glass = require('../db/models/Glass')
 // ====================
 // Functions
 // ====================
-// GET
+// Read Drink data, GET
 exports.get = (req, res) => {
   Drink.find({})
     .populate('glass', '-_id')
@@ -21,7 +21,7 @@ exports.get = (req, res) => {
   })
 }
 
-// POST
+// Create new Drink, POST
 exports.post = (req, res) => {
   var drink = new Drink()
   drink.name = req.body.name
@@ -39,7 +39,7 @@ exports.post = (req, res) => {
   })
 }
 
-// EDIT
+// Edit Drink data, EDIT
 exports.edit = (req, res) => {
   Glass.findOne({ name: req.body.glass }, (err, glass) => {
 
@@ -56,7 +56,7 @@ exports.edit = (req, res) => {
 
 }
 
-// DELETE
+// Delete Drink data, DELETE
 exports.delete = (req, res) => {
   Drink.findOneAndRemove({ _id: req.body._id }, (err, result) => {
     if (err) res.send(err)

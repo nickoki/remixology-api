@@ -39,7 +39,7 @@ UserSchema.pre('save', next => {
   // If edit password or new User
   if (this.isModified('password') || this.isNew) {
     // Salt password
-    bcrypt.genSalt(10, (err, salt) {
+    bcrypt.genSalt(10, (err, salt) => {
       if (err) return next(err)
       // Hash password
       bcrypt.hash(user.password, salt, (err, hash) => {

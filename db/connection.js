@@ -22,4 +22,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/remixology-api'
 // ====================
 // Exports
 // ====================
-module.exports = mongoose
+module.exports = {
+  mongoose,
+  'secret': 'timtim'
+}

@@ -8,9 +8,9 @@ var bodyParser = require('body-parser')
 
 // Mongo and models
 var db         = require('./db/connection')
-var Drink      = require('./db/models/Drink')
 
 // Controllers
+var users       = require('./controllers/users')
 var drinks      = require('./controllers/drinks')
 var glassware   = require('./controllers/glassware')
 
@@ -48,6 +48,13 @@ app.use( (req, res, next) => {
 router.get('/', (req, res) => {
   res.json({ message: `Cheers! Welcome to the Remixology API.` })
 })
+
+// Routing for User auth
+router.route('/signup')
+  .post(users.signup)
+
+router.route('/authenticate')
+  .post(users.authenticate)
 
 // Routing for Drinks
 router.route('/drinks')
