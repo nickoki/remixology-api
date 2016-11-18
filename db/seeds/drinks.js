@@ -23,7 +23,9 @@ Glass.findOne({ name: 'Highball' }, (err, glass) => {
     // Remove all entries, insert seed data
     Drink.remove({}).then( () => {
       data.forEach( drink => {
+        console.log(`Inserting ${drink.name}`)
         Drink.collection.insert(drink).then( () => {
+          console.log('Drink seeding complete.')
           process.exit()
         }).catch((err) => { console.log(err) })
       })

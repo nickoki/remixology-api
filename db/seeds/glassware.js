@@ -20,7 +20,9 @@ var data = [
 // Remove all entries, insert seed data
 Glass.remove({}).then( () => {
   data.forEach( glass => {
+    console.log(`Inserting ${glass.name}`)
     Glass.collection.insert(glass).then( () => {
+      console.log(`Glass seeding complete.`)
       process.exit()
     }).catch((err) => { console.log(err) })
   })
