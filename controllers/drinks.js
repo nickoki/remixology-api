@@ -38,3 +38,14 @@ exports.post = (req, res) => {
     })
   })
 }
+
+// EDIT
+
+
+// DELETE
+exports.delete = (req, res) => {
+  Drink.findOneAndRemove({ _id: req.body._id }, (err, result) => {
+    if (err) res.send(err)
+    else res.json({ message: `Drink removed successfully.` })
+  })
+}
