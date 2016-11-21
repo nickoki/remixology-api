@@ -7,6 +7,8 @@ var Drink      = require('../db/models/Drink')
 var Glass      = require('../db/models/Glass')
 var Ingredient = require('../db/models/Ingredient')
 
+var auth       = require('../controllers/auth')
+
 
 
 // ====================
@@ -38,6 +40,9 @@ exports.post = (req, res) => {
 
 // Edit Drink data, EDIT
 exports.edit = (req, res) => {
+  auth.getUser(req, userId => {
+    req.body.user = userId
+  })
 
   Glass.findOne({ name: req.body.glass }, (err, glass) => {
     if (err) res.send(err)

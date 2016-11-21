@@ -6,6 +6,7 @@
 var mongoose   = require('mongoose')
 var Glass      = require('./Glass')
 var Ingredient = require('./Ingredient')
+var User       = require('./User')
 
 
 
@@ -43,6 +44,11 @@ var DrinksSchema = new Schema({
     },
     _id: false,
   }],
+  user: {
+    ref:      'User',
+    type:     Schema.ObjectId,
+    required: true,
+  },
 }, {
   timestamps: true
 })
