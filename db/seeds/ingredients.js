@@ -24,7 +24,6 @@ var data = [
     name: 'Dry Vermouth',
     color: '#f4f8e9',
   },
-
 ]
 
 // Remove all entries, insert seed data

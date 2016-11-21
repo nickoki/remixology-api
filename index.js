@@ -3,16 +3,17 @@
 // ====================
 // Module dependencies
 // ====================
-var express    = require('express')
-var bodyParser = require('body-parser')
+var express     = require('express')
+var bodyParser  = require('body-parser')
 
 // Mongo and models
-var db         = require('./db/connection')
+var db          = require('./db/connection')
 
 // Controllers
 var auth        = require('./controllers/auth')
 var drinks      = require('./controllers/drinks')
 var glassware   = require('./controllers/glassware')
+var ingredients = require('./controllers/ingredients')
 var users       = require('./controllers/users')
 
 
@@ -67,6 +68,10 @@ router.route('/drinks')
 // Routing for Glassware
 router.route('/glassware')
   .get(glassware.get)
+
+// Routing for Ingredients
+router.route('/ingredients')
+  .get(ingredients.get)
 
 
 

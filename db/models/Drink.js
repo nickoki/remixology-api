@@ -26,24 +26,23 @@ var DrinksSchema = new Schema({
     required: true,
   },
   description: {
-    type:     String,
+    type: String,
   },
   instructions: {
-    type:     String,
+    type: String,
   },
-  recipe: {
-    type: [{
-      ingredient: {
-        type: Ingredient,
-        required: true,
-      },
-      amount: {
-        type: Number,
-        required: true,
-      },
-    }],
-  },
-
+  recipe: [{
+    ingredient: {
+      ref:      'Ingredient',
+      type:     Schema.ObjectId,
+      required: true,
+    },
+    amount: {
+      type:     Number,
+      required: true,
+    },
+    _id: false,
+  }],
 }, {
   timestamps: true
 })

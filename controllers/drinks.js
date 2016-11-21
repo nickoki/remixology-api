@@ -3,8 +3,9 @@
 // ====================
 // Dependencies
 // ====================
-var Drink = require('../db/models/Drink')
-var Glass = require('../db/models/Glass')
+var Drink      = require('../db/models/Drink')
+var Glass      = require('../db/models/Glass')
+var Ingredient = require('../db/models/Ingredient')
 
 
 
@@ -14,7 +15,8 @@ var Glass = require('../db/models/Glass')
 // Read Drink data, GET
 exports.get = (req, res) => {
   Drink.find({})
-    .populate('glass', '-_id')
+    .populate('glass')
+    .populate('recipe.ingredient')
     .exec((err, drinks) => {
     if (err) res.send(err)
     else res.json(drinks)
@@ -36,9 +38,11 @@ exports.post = (req, res) => {
 
 // Edit Drink data, EDIT
 exports.edit = (req, res) => {
+
   Glass.findOne({ name: req.body.glass }, (err, glass) => {
     if (err) res.send(err)
     else if (glass) req.body.glass = glass
+
     Drink.findOneAndUpdate({ _id: req.body._id }, { $set: req.body }, { new: true }, (err, result) => {
       if (err) res.send(err)
       else res.json({ success: true, message: `Drink updated succesfully.` })
