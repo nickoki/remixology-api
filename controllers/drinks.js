@@ -21,6 +21,7 @@ exports.get = (req, res) => {
   Drink.find({})
     .populate('glass')
     .populate('recipe.ingredient')
+    .populate('user', 'username')
     .exec((err, drinks) => {
     if (err) res.send(err)
     else res.json(drinks)
