@@ -42,7 +42,11 @@ var DrinksSchema = new Schema({
       type:     Number,
       required: true,
     },
-    _id: false,
+    // order: {
+    //   type:    Number,
+    //   default: 0,
+    // },
+    _id: false, // No recipe entry ids needed
   }],
   user: {
     ref:      'User',

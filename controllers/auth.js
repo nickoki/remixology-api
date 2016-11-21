@@ -13,17 +13,18 @@ var User     = require('../db/models/User')
 // ====================
 // Functions
 // ====================
-// Route protection
-exports.bouncer = (passport.authenticate('jwt', { session: false }), (req, res, next) => {
-  // Function to extract token from request headers
-  var getToken = (headers) => {
-    if (headers && headers.authorization) {
-      var parted = headers.authorization.split(' ')
-      if (parted.length === 2) return parted[1]
-      else return null
-    }
+// Helper Function to extract JSON Web Token from headers
+var getToken = headers => {
+  if (headers && headers.authorization) {
+    var parted = headers.authorization.split(' ')
+    if (parted.length === 2) return parted[1]
     else return null
   }
+  else return null
+}
+
+// Route protection
+exports.bouncer = (passport.authenticate('jwt', { session: false }), (req, res, next) => {
   // Set token
   var token = getToken(req.headers)
   // Decode token
@@ -39,15 +40,6 @@ exports.bouncer = (passport.authenticate('jwt', { session: false }), (req, res, 
 })
 
 exports.getUser = function(req, next) {
-  // Function to extract token from request headers
-  var getToken = (headers) => {
-    if (headers && headers.authorization) {
-      var parted = headers.authorization.split(' ')
-      if (parted.length === 2) return parted[1]
-      else return null
-    }
-    else return null
-  }
   // Set token
   var token = getToken(req.headers)
   // Decode token
