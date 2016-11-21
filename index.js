@@ -73,7 +73,7 @@ router.route('/glassware')
 // ====================
 // API Middleware
 // ====================
-app.use('/api', router)
+app.use('/', router)
 
 
 
