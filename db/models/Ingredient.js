@@ -1,4 +1,4 @@
-// db/models/Glass.js
+// db/models/Ingredient.js
 
 // ====================
 // Module dependencies
@@ -12,28 +12,16 @@ var mongoose = require('mongoose')
 // ====================
 var Schema = mongoose.Schema
 
-// Define Schema for Glassware
-var GlasswareSchema = new Schema({
+// Define Schema for Ingredients
+var IngredientsSchema = new Schema({
   name: {
     type:     String,
     required: true,
-    unique:   true,
   },
-  image_url: {
+  color: {
     type:     String,
     required: true,
-  },
-  capacity: {
-    type:     Number,
-    required: true,
-  },
-  margin_top: {
-    type:     Number,
-    required: true,
-  },
-  margin_bottom: {
-    type:     Number,
-    required: true,
+    default:  '#eaeaea',
   },
 }, {
   timestamps: true
@@ -44,4 +32,4 @@ var GlasswareSchema = new Schema({
 // ====================
 // Exports
 // ====================
-module.exports = mongoose.model('Glass', GlasswareSchema)
+module.exports = mongoose.model('Ingredient', IngredientsSchema)

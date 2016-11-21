@@ -3,8 +3,9 @@
 // ====================
 // Module dependencies
 // ====================
-var mongoose = require('mongoose')
-var Glass    = require('./Glass')
+var mongoose   = require('mongoose')
+var Glass      = require('./Glass')
+var Ingredient = require('./Ingredient')
 
 
 
@@ -22,6 +23,7 @@ var DrinksSchema = new Schema({
   glass: {
     ref:      'Glass',
     type:     Schema.ObjectId,
+    required: true,
   },
   description: {
     type:     String,
@@ -29,14 +31,18 @@ var DrinksSchema = new Schema({
   instructions: {
     type:     String,
   },
-  // created_at: {
-  //   type:     Date,
-  //   required: true,
-  //   default:  Date.now(),
-  // },
-  // ingredients: {
-  //   type: [Ingredient],
-  // },
+  recipe: {
+    type: [{
+      ingredient: {
+        type: Ingredient,
+        required: true,
+      },
+      amount: {
+        type: Number,
+        required: true,
+      },
+    }],
+  },
 
 }, {
   timestamps: true
