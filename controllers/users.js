@@ -44,8 +44,8 @@ exports.authenticate = (req, res) => {
       user.checkPassword(req.body.password, function(err, isMatch) {
         if (isMatch && !err) {
           // Assign token
-          var token = jwt.sign(user, db.secret)
-          res.json({ success: true, token: `JWT ${token}` })
+          var token = jwt.sign({ userId: user._id, username: user.username }, db.secret, { algorithm: 'HS256' })
+          res.json({ success: true, token: `JWT ${token}`, username: user.username })
         }
         else res.send({ success: false, message: 'Authentication failed: Incorrect password.' })
       })

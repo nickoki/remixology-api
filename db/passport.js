@@ -21,7 +21,7 @@ module.exports = passport => {
   opts.jwtFromRequest = ExtractJwt.fromAuthHeader()
   opts.secretOrKey = db.secret
   // Start Passport Strategy
-  passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
+  passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
     // Find a user based on id (from jwt payload)
     User.findOne({ _id: jwt_payload.id }, (err, user) => {
       if (err) return done(err, false)
