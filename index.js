@@ -36,7 +36,7 @@ app.use( (req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Credentials', 'true')
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE')
-  res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers')
+  res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization')
   res.setHeader('Cache-Control', 'no-cache')
   next()
 })
@@ -65,6 +65,9 @@ router.route('/drinks')
   .put(auth.bouncer, drinks.edit)
   .delete(auth.bouncer, drinks.delete)
 
+router.route('/drinks/:id')
+  .get(drinks.show)
+
 // Routing for Glassware
 router.route('/glassware')
   .get(glassware.get)
@@ -72,6 +75,7 @@ router.route('/glassware')
 // Routing for Ingredients
 router.route('/ingredients')
   .get(ingredients.get)
+  .post(auth.bouncer, ingredients.post)
 
 
 

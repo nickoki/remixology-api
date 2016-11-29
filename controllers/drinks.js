@@ -18,13 +18,25 @@ var auth       = require('../controllers/auth')
 // ====================
 // Read Drink data, GET
 exports.get = (req, res) => {
-  Drink.find({})
+  Drink.find()
     .populate('glass')
     .populate('recipe.ingredient')
     .populate('user', 'username')
     .exec((err, drinks) => {
     if (err) res.send(err)
     else res.json(drinks)
+  })
+}
+
+// Read Drink data, SHOW
+exports.show = (req, res) => {
+  Drink.findOne({_id: req.params.id})
+    .populate('glass')
+    .populate('recipe.ingredient')
+    .populate('user', 'username')
+    .exec((err, drink) => {
+    if (err) res.send(err)
+    else res.json(drink)
   })
 }
 
@@ -54,9 +66,13 @@ exports.edit = (req, res, userId) => {
       if (err) res.send(err)
       else if (glass) req.body.glass = glass
 
-      Drink.findOneAndUpdate({ _id: req.body._id }, { $set: req.body }, { new: true }, (err, drink) => {
+      Drink.findOneAndUpdate({ _id: req.body._id }, { $set: req.body }, { new: true })
+      .populate('glass')
+      .populate('recipe.ingredient')
+      .populate('user', 'username')
+      .exec( (err, drink) => {
         if (err) res.send(err)
-        else res.json({ success: true, message: `${drink.name} updated succesfully.` })
+        else res.json({ success: true, message: `${drink.name} updated succesfully.`, drink })
       })
     })
   })

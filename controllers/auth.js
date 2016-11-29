@@ -30,7 +30,7 @@ exports.bouncer = (passport.authenticate('jwt', { session: false }), (req, res, 
   // Decode token
   if (token) {
     var decoded = jwt.verify(token, db.secret)
-    User.findOne({ _id: decoded._doc._id }, (err, user) => {
+    User.findOne({ _id: decoded.userId }, (err, user) => {
       if (err) throw err
       if (!user) return res.status(403).send({ success: false, message: 'Authentication failed: User not found.' })
       else return next()
@@ -45,7 +45,7 @@ exports.getUser = function(req, next) {
   // Decode token
   if (token) {
     var decoded = jwt.verify(token, db.secret)
-    User.findOne({ _id: decoded._doc._id }, (err, user) => {
+    User.findOne({ _id: decoded.userId }, (err, user) => {
       if (err) throw err
       if (!user) return res.status(403).send({ success: false, message: 'Authentication failed: User not found.' })
       else return next(user._id)
