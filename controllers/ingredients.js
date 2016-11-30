@@ -29,7 +29,7 @@ exports.post = (req, res) => {
     req.body.user = userId
 
     var ingredient = new Ingredient(req.body)
-    ingedient.save( err => {
+    ingredient.save( err => {
       if (err) res.send(err)
       else res.json({ success: true, message: `Cheers! ${ingredient.name} posted successfully.` })
     })

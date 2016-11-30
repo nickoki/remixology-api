@@ -3,6 +3,8 @@
 // ====================
 // Dependencies
 // ====================
+var async      = require('async')
+
 // Models
 var Drink      = require('../db/models/Drink')
 var Glass      = require('../db/models/Glass')
@@ -45,10 +47,51 @@ exports.post = (req, res) => {
   auth.getUser(req, userId => {
     req.body.user = userId
 
-    var drink = new Drink(req.body)
-    Glass.findOne({ name: req.body.glass }, (err, glass) => {
-      if (err) res.send(err)
-      else if (glass) drink.glass = glass
+    let drink = new Drink(req.body)
+    let recipe = []
+
+    var calls = []
+
+
+
+    calls.push(function(callback) {
+      Glass.findOne({ name: req.body.glass }, (err, glass) => {
+        if (err) return err
+        else if (glass) drink.glass = glass
+        callback(null, glass)
+      })
+    })
+
+    for (let i = 0; i < req.body.recipe.length; i++) {
+
+      calls.push(function(callback) {
+        Ingredient.findOne({name: req.body.recipe[i].name}, (err, item) => {
+          if (err) return err
+          console.log("BBBBBB")
+          let prep = {
+            amount: req.body.recipe[i].amount,
+            ingredient: item,
+          }
+          recipe.push(prep)
+          console.log(recipe)
+          callback(null, recipe)
+        })
+      })
+    }
+
+    console.log("HERE")
+
+    async.series(calls, function(err, rez) {
+      if (err) console.log(err)
+
+      console.log("CCCCCC")
+      console.log(rez)
+      console.log("RECIPE")
+      console.log(recipe)
+      console.log("SAVING")
+      drink.recipe = recipe
+      console.log(drink)
+
       drink.save( err => {
         if (err) res.send(err)
         else res.json({ success: true, message: `Cheers! ${drink.name} posted successfully.` })
