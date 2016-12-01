@@ -44,16 +44,16 @@ exports.show = (req, res) => {
 
 // Create new Drink, POST
 exports.post = (req, res) => {
+  // Get User
   auth.getUser(req, userId => {
     req.body.user = userId
-
+    // Prepare async call stack
+    let calls = []
+    // Create new drink object
     let drink = new Drink(req.body)
+    // Create temp recipe object
     let recipe = []
-
-    var calls = []
-
-
-
+    // Add find glass function to stack
     calls.push(function(callback) {
       Glass.findOne({ name: req.body.glass }, (err, glass) => {
         if (err) return err
@@ -61,37 +61,26 @@ exports.post = (req, res) => {
         callback(null, glass)
       })
     })
-
+    // Add find ingedients functions to stack
     for (let i = 0; i < req.body.recipe.length; i++) {
-
       calls.push(function(callback) {
         Ingredient.findOne({name: req.body.recipe[i].name}, (err, item) => {
           if (err) return err
-          console.log("BBBBBB")
           let prep = {
             amount: req.body.recipe[i].amount,
             ingredient: item,
           }
           recipe.push(prep)
-          console.log(recipe)
           callback(null, recipe)
         })
       })
     }
-
-    console.log("HERE")
-
+    // Run async functions
     async.series(calls, function(err, rez) {
       if (err) console.log(err)
-
-      console.log("CCCCCC")
-      console.log(rez)
-      console.log("RECIPE")
-      console.log(recipe)
-      console.log("SAVING")
+      // Update drink recipe
       drink.recipe = recipe
-      console.log(drink)
-
+      // Save drink object
       drink.save( err => {
         if (err) res.send(err)
         else res.json({ success: true, message: `Cheers! ${drink.name} posted successfully.` })
