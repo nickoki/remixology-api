@@ -76,6 +76,8 @@ router.route('/glassware')
 router.route('/ingredients')
   .get(ingredients.get)
   .post(auth.bouncer, ingredients.post)
+  .put(auth.bouncer, ingredients.edit)
+  .delete(auth.bouncer, ingredients.delete)
 
 
 

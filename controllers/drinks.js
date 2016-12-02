@@ -83,7 +83,7 @@ exports.post = (req, res) => {
       // Save drink object
       drink.save( err => {
         if (err) res.send(err)
-        else res.json({ success: true, message: `Cheers! ${drink.name} posted successfully.` })
+        else res.json({ success: true, message: `Cheers! ${drink.name} posted successfully.`, id: drink._id })
       })
     })
   })
@@ -91,29 +91,66 @@ exports.post = (req, res) => {
 
 // Edit Drink data, EDIT
 exports.edit = (req, res, userId) => {
+  // Get User
   auth.getUser(req, userId => {
-    req.body.user = userId
-
-    Glass.findOne({ name: req.body.glass }, (err, glass) => {
-      if (err) res.send(err)
-      else if (glass) req.body.glass = glass
-
-      Drink.findOneAndUpdate({ _id: req.body._id }, { $set: req.body }, { new: true })
-      .populate('glass')
-      .populate('recipe.ingredient')
-      .populate('user', 'username')
-      .exec( (err, drink) => {
-        if (err) res.send(err)
-        else res.json({ success: true, message: `${drink.name} updated succesfully.`, drink })
+    if (req.body.user != userId) {
+      res.json({ success: false, message: "Permission denied: Wrong user." })
+    } else {
+      // Prepare async call stack
+      let calls = []
+      // Create temp recipe object
+      let recipe = []
+      // Add find glass function to stack
+      calls.push(function(callback) {
+        Glass.findOne({ name: req.body.glass }, (err, glass) => {
+          if (err) return err
+          else if (glass) req.body.glass = glass
+          callback(null, glass)
+        })
       })
-    })
+      // Add find ingedients functions to stack
+      for (let i = 0; i < req.body.recipe.length; i++) {
+        calls.push(function(callback) {
+          Ingredient.findOne({name: req.body.recipe[i].name}, (err, item) => {
+            if (err) return err
+            let prep = {
+              amount: req.body.recipe[i].amount,
+              ingredient: item,
+            }
+            recipe.push(prep)
+            callback(null, recipe)
+          })
+        })
+      }
+      // Run async functions
+      async.series(calls, function(err, rez) {
+        if (err) console.log(err)
+        // Update drink recipe
+        req.body.recipe = recipe
+        // Update drink object
+        Drink.findOneAndUpdate({ _id: req.body._id }, { $set: req.body }, { new: true })
+        .populate('glass')
+        .populate('recipe.ingredient')
+        .populate('user', 'username')
+        .exec( (err, drink) => {
+          if (err) res.send(err)
+          else res.json({ success: true, message: `${drink.name} updated succesfully.`, id: drink._id })
+        })
+      })
+    }
   })
 }
 
 // Delete Drink data, DELETE
 exports.delete = (req, res) => {
-  Drink.findOneAndRemove({ _id: req.body._id }, (err, drink) => {
-    if (err) res.send(err)
-    else res.json({ success: true, message: `${drink.name} removed successfully.` })
+  auth.getUser(req, userId => {
+    if (req.body.user != userId) {
+      res.json({ success: false, message: "Permission denied: Wrong user." })
+    } else {
+      Drink.findOneAndRemove({ _id: req.body._id }, (err, drink) => {
+        if (err) res.send(err)
+        else res.json({ success: true, message: `${drink.name} removed successfully.` })
+      })
+    }
   })
 }

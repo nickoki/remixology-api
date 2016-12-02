@@ -25,6 +25,7 @@ Glass.findOne({ name: 'Highball' }, (err, glass) => {
 
             var data = [
               {
+                user: '583dfe995ca6bc09bf901aa4',
                 name: 'Vodka Martini',
                 glass: glass._id,
                 description: 'Lorem ipsum.',
