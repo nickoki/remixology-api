@@ -10,7 +10,7 @@ var Glass    = require('../models/Glass')
 var data = [
   {
     name: 'Highball',
-    image_url: 'http://res.cloudinary.com/ln4ekgvyc/image/upload/v1479402093/remixology/highball.svg',
+    image_url: 'http://res.cloudinary.com/ln4ekgvyc/image/upload/v1479402093/remixology/highball.png',
     capacity: 12,
     margin_top: 12,
     margin_bottom: 77,
