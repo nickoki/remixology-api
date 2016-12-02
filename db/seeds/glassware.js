@@ -15,6 +15,13 @@ var data = [
     margin_top: 12,
     margin_bottom: 77,
   },
+  {
+    name: 'Martini',
+    image_url: 'http://res.cloudinary.com/ln4ekgvyc/image/upload/v1480653617/remixology/martini.png',
+    capacity: 6,
+    margin_top: 11,
+    margin_bottom: 356,
+  }
 ]
 
 // Remove all entries, insert seed data
