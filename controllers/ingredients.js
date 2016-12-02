@@ -78,7 +78,7 @@ exports.edit = (req, res) => {
   })
 }
 
-// Delete Drink data, DELETE
+// DELETE
 exports.delete = (req, res) => {
   // Prepare async call stack
   let calls = []

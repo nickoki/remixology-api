@@ -25,7 +25,10 @@ var data = [
 ]
 
 // Remove all entries, insert seed data
+/*
+// ** Danger **
 Glass.remove({}).then( () => {
+*/
   data.forEach( glass => {
     console.log(`Inserting ${glass.name}`)
     Glass.collection.insert(glass).then( () => {
@@ -33,4 +36,6 @@ Glass.remove({}).then( () => {
       process.exit()
     }).catch((err) => { console.log(err) })
   })
+/*
 }).catch((err) => { console.log(err) })
+*/
